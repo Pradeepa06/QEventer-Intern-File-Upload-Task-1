@@ -1,44 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Firebase File Upload</title>
+        <style media="screen">
+        body{
+            display:flex;
+            min-height: 100px;
+            width:100%;
+            padding:0;
+            margin:0;
+            align-items:center;
+            justify-content:center;
+            flex-direction: column;
+        }
+        #uploader{
+            -webkit-appearance: none;
+            appearance: none;
+            width:50%;
+            margin-bottom: 10px;
+        }
+        
+        </style>  
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>QEventer</title>
-</head>
+    <body>
+        <progress value="0" max="100" id="uploader">0%</progress>
+      <input type="file" value="Upload" id="filebutton"/>
 
-<body>
-    <input type="file" id="ip-file" />
-</body>
 
 <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyDd0mw_ZmYJBMm2-g8ncTjkaEaEqaLQsXg",
+      authDomain: "q-eventer.firebaseapp.com",
+      databaseURL: "https://q-eventer.firebaseio.com",
+      projectId: "q-eventer",
+      storageBucket: "q-eventer.appspot.com",
+      messagingSenderId: "147510796473",
+      appId: "1:147510796473:web:ce42926bace4c6fb577b68",
+      measurementId: "G-XXFLFKZSE3"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    
+          
+    var uploader=document.getElementById('uploader');
+    var filebutton=document.getElementById('filebutton');
+        
+    //file selection
+    filebutton.addEventListener('change',function(e){
+        
+//get the file from user
+var file=e.target.file[0];
+        
+//creating a storage ref
+ var storageRef=firebase.storage().ref('gitpractice/'+ file.name);
+        
+//uploading the file
+var task=storageRef.put(file);
+        
+//updating the progress bar
+task.on('state_changed',
 
-    let fileInput = document.getElementById('ip-file');
+function progress(snapshot){
+var percentage=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
+uploader.value=percentage;
+},
 
-    fileInput.addEventListener('change', inputListener);
+function error(err){
 
-    function inputListener(e) {
-        e.preventDefault();
+},
 
-        let file = fileInput.files[0];
+function completer(){
 
-        let reader = new FileReader();
-        reader.readAsText(file);
 
-        reader.addEventListener('load', (event) => {
+}
 
-            let blob = event.target.result;
+);
+    });
+  </script>
 
-            // Write your code here
 
-        });
-
-        reader.addEventListener('error', (event) => {
-            alert('Unable to read file');
-        })
-    }
-
-</script>
 
 </html>
