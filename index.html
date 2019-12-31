@@ -68,18 +68,28 @@ uploader.value=percentage;
 },
 
 function error(err){
-
 },
 
 function complete(){
+});
+task.addEventListener(error,()){
+ switch (error.code) {
+    case 'storage/unauthorized':
+      alert("User doesn't have permission to access the object");
+      break;
 
+    case 'storage/canceled':
+      alert(" User canceled the upload");
+      break;
+
+    case 'storage/unknown':
+      alert("Unknown error occurred");
+      break;
+         
+   default:alert("Unable to open the file");
+     break;
+         }
 }
-);
-        task.addEventListener(error,()){
-alert("Unable to open the file");
     });
   </script>
-
-
-
 </html>
