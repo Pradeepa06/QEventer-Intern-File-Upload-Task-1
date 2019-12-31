@@ -37,7 +37,7 @@ storageRef.child('Eventer/balloon.jpg').getDownloadURL().then(function(url) {
   var image = new XMLHttpRequest();
   image.responseType = 'file';
   image.onload = function(event) {
-    var file = xhr.response;
+    var file = image.response;
   };
   image.open('GET', url);
   image.send();
